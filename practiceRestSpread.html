@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+1.	JAVASCRIPT DESTRUCTURING ASSIGNMENT
+====================================================
+Meaning Of Destructuring: extract specific part from main body:
+The Process Of Unpacking A Small Part Of Something From The Main Part
+Literraly Meaning: (noun)By DESTRUCTURING, it is possible to extract a specific part from the main body, 
+so it can be modified easily as needed.
+
+IN JAVASCRIPT :
+The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack 
+values from arrays, or properties from objects, into distinct variables.
+
+==========================================================================
+i. Array Destructuring
+i(1)
+----------------------- 
+<script>
+	//old way : ES5
+	var arr1 = ["a","b",1,"c",2,"d"];
+	console.log(arr1[2] ,arr1[4]);//1,2
+
+	//new way : ES6
+	let arr2=["a","b",1,"c",2,"d"];
+	let [let1,let2,num1,,let3,num2,let4]= arr2;
+	let [,,n1,,n2] = arr2
+	console.log(n1, n2);//1,2
+//-----------------------------------
+   let myArr = ["a","b","c","d","e"];
+   let[l1,l2,l3,l4,l5] = myArr;
+   let[w1,,,,w5] = myArr;
+   console.log(w1,w5);//a,e
+</script>
+ii(2): 
+USING *REST PETTERN* (NOT Rest Perameter*) : 
+--------------------------------------------
+Assigning the rest of an array to a variable:
+When destructuring an array, you can unpack and assign the remaining part of it to a variable 
+using the rest pattern:(it's not REST PERAMETER!!!!)
+<script>
+	let cars = ["bmw","ford","volvo","car1","car2"];
+	let[c1,...v] = cars;
+	console.log(c1);//bmw
+	console.log(v);//['ford', 'volvo', 'car1', 'car2']
+</script>
+
+
+==========================================================================
+ii. Object Destructuring :
+-------------------------
+
+SYNTEX: {syntex for OBJECT destructuring}
+<script>
+	let{_variable1, _variable2} =
+	{_variable1:'value1',_variable2:'value2'}
+</script>
+
+1. 
+ASSIGNING TO EXISTING VARIABLE NAMES:
+-------------------------------------
+<script>
+	let person1 = {
+		firstName:"John",
+		lastName:"doe",
+		DOB:"02/12/1993"
+	}
+	console.log(person1);
+	console.log(person1.lastName);
+	
+//use destructuring:
+	let{firstName,lastName,DOB} = person1;
+	console.log(firstName);
+</script>
+
+
+<script>
+	let person1 = {
+		name:"Tom",
+		city:"NC",
+		age:45,
+		qualification:{
+			html:"2 years",
+			css:"2 years",
+			JS:"2 years",
+			React_JS:"learning"
+		},
+		email:["tom1@gamil.com","smithTom@gamil.com"],
+		phone:12345678
+	}
+
+	//OLD METHOD: ES-5:
+	console.log(person1.name);//Tom
+	console.log(person1.qualification.css);//2 years
+	console.log(person1.email[1]);//smithTom@gamil.com
+
+	//but with js object destrcturing assignment we don't have to 
+	//write 'Object Name' (here:'person1') to get its properties or methods.
+	//NEW METHOD : ES-6
+	let{name,city,age,qualification,email,phone} = person1;
+	console.log(name);//Tome
+	console.log(qualification.JS);//2 years
+</script>
+
+2. 
+ASSIGNING TO NEW VARIABLE NAMES:
+--------------------------------
+The following code destructures the object into variables with a different name than the object property:
+<script>
+	let person2 = {
+		firstName2:"Aman",
+		lastName2:"Kumar",
+		dateOfBirth2:"2/1/1988"
+	}
+	console.log(person2);
+	console.log(person2.firstName2);
+
+//destructuring of Object:
+    let{firstName2:fn2 , lastName2:ln2, dateOfBirth2:DOB2} = person2;
+
+    console.log(person2);
+    console.log(person2.firstName2);//Aman
+    console.log(person2.fn2);//undefined
+    console.log(fn2);//Aman
+    console.log(DOB2);//2/1/1988
+
+</script>
+
+
+
+<script>
+	let student = {
+		firstName_lastName:"Tom Hanks",
+		grade:9,
+		sr:1234
+	}
+	console.log(student);
+    console.log(student.firstName_lastName);
+	let{firstName_lastName:fullName , grade:_class, sr:registration} = student;
+	console.log(fullName , _class , registration);
+
+</script>
+
+3. 
+ASSIGNING VARIABLES WITH DEFAULT VALUE:
+---------------------------------------
+We can also assign default values to variables whose keys may not exist in the object we want to destructure. 
+This will prevent our variable from having an undefined value being assigned to it. 
+The code below demonstrates this:
+<script>
+	const car1 = {
+		modal:"JEEP",
+		year:2003,
+		miles:"10K",
+		warranty:"1year"
+	}
+	//Revison Of all 3:
+	//1. destructuring of object:
+	const{modal,year,miles,warranty} = car1;
+	console.log(car1);//{modal: 'JEEP', year: 2003, miles: '10K', warranty: '1year'}
+    
+    //2. assigning to new variables:
+	const{modal:car_modal , year:Relesing_Year , miles:milage , warranty: gurantee } = car1;
+	console.log(car1);//{modal: 'JEEP', year: 2003, miles: '10K', warranty: '1year'}
+	console.log(modal);//JEEP
+    console.log(car_modal);//JEEP
+
+    //3. ASSingning variables with default values:
+
+    //3(i) WITHOUT SETTING WITH DEFAULT VALUE:
+    const pet1 = {
+    	       type:"cat",
+    	       age:"1year"
+                }
+     // we did not defined variable 'weight' in object pet1
+    const {type,age,weight} = pet1;
+    //without setting default values:
+    console.log(type, age, weight);//cat, 1year, undefined 
+
+    //now we defined 'default-values' for variables:
+    const pet2 = {
+    	type2:"dog",
+    	age2:"3years"
+    }
+    //now we give default values to each variables:
+    const{
+    	type2  =  "default type" ,
+    	age2   =  "default age",
+     weight2   =  "default weight"
+    } = pet2
+    console.log(type2,age2,weight2);//dog 3years default weight
+
+</script>
+
+
+========================================================================================
+
+             REST PERAMETER:
+        ======================== 
+REST PERAMETER ALLOW US TO REPRESENT INDEFINATE NUMBERS OF ARGUMENTS AS AN ARRAY:
+
+<p id="showText" style="background-color:#7C959F;"></p>
+<script>
+	function sum(...numbers){
+		let text = "";
+		for( n of numbers){
+			text += `${n+1}<br>`;
+			document.getElementById("showText").innerHTML = text;
+		} 
+		return text;
+	}
+	sum(2,4,6,8,10,12);
+</script>
+ Rest Parameter is representation of arguments as an array, so array properties apply on it:
+<script>
+	function transport(trans1,trans2,...vehicals){
+                 console.log(...vehicals);//
+                 console.log(vehicals);//
+                 console.log(vehicals[0]);//
+                 console.log(vehicals.indexOf('ship'));//
+	}
+	transport("horse","camel","cars","aeroplane","ship","boats");
+</script>
+=========================================================================
+
+                             SPREAD OPERATOR:
+                        =========================
+SPREAD OPERATOR HAS REPLACED : APPLY(), COPY & CONCATINATION:
+i. replaced apply()
+ <script>
+ 	function mult(a,b,c){
+ 		console.log(a*b*c);//
+ 		console.log(a+b+c);//
+ 		console.log(a+b-c);//
+ 	}
+ 	var multArray = [2,3,4];
+ 	mult.apply(null,multArray);
+ </script>
+use spread operator instead of apply(): 
+ <script>
+ 	function calc(a,b,c,x,y,z){
+ 		console.log(a+b+c+x+y+z);
+ 		console.log(x/y*z);
+ 	}
+ 	let calcArray = [2,3,4,5,6,7];
+ 	calc(...calcArray);
+
+ </script>
+......................................................... 
+ii. replace copy:
+<script>
+	let numb1 = [0,1,2,3];
+	let numb2 = numb1;
+	console.log(numb1);//
+	console.log(numb2);//
+
+	numb2.push('x','y')
+	console.log(numb1);//
+	console.log(numb2);//
+</script>
+use spread operator to copy array :
+<script>
+	let numb3 = [10,20,30];
+	let numb4 = [...numb3];
+	console.log(numb3);//
+	console.log(numb4);//
+
+	//now we add more elements in numb4 :
+	numb4 = ["i","j",...numb3];
+	console.log(numb4);//
+	//we can use spread operator with multiple arrays:
+	let count1 = [11,22,33];
+	let count2 = [10,20,30];
+	let mergeBoth = [...count1,...count2];
+	console.log(mergeBoth);//[11, 22, 33, 10, 20, 30]
+	//add some other elements 
+	mergeBoth = ["one","two",...count1,...count2];
+	console.log(mergeBoth);//['one', 'two', 11, 22, 33, 10, 20, 30]
+</script>
+
+</body>
+</html>
